@@ -7,8 +7,8 @@ before_cache: |
 before_script:
 - rustup component add rustfmt
 - rustup component add clippy
-- cargo install --force cargo-audit
-- cargo generate-lockfile
+#- cargo install --force cargo-audit
+#- cargo generate-lockfile
 # As a result of https://github.com/travis-ci/travis-ci/issues/1066, we run
 # everything in one large command instead of multiple commands.
 # In this way, the build stops immediately if one of the commands fails.
@@ -17,6 +17,6 @@ script: |
   cargo clippy -- -D warnings &&
   cargo build &&
   cargo test &&
-  cargo audit
+# cargo audit
 after_success: |
   cargo tarpaulin --ignore-tests
