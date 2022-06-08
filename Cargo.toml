@@ -23,6 +23,7 @@ serde = { version ="1", features = ["derive"]}
 uuid = { version = "0.8.1", features = ["v4"] }
 chrono = "0.4.19"
 env_logger = "0.9"
+log = "0.4"
 
 [dev-dependencies]
 reqwest = "0.11"
