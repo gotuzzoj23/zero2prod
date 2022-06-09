@@ -1,16 +1,16 @@
-use env_logger::Env;
 use sqlx::PgPool;
 use std::net::TcpListener;
 use zero2prod::configuration::get_configuration;
 use zero2prod::startup::run;
+use zero2prod::telemetry::{get_subscriber, init_subscriber};
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    // 'init' does call 'set_logger', so this is all we need to do.
-    // We are falling back to printing all logs at info-leve or above.
-    // if the RUST_LOG environment variable has not been set.
-    // Panic if we can't read configuration
-    env_logger::Builder::from_env(Env::default().default_filter_or("info")).init();
+    // Get subscriber from environment variables
+    // If env variable, REST_LOG, has not been set we fall back to printing all spans at
+    // at info-level or above
+    let subscriber = get_subscriber("info".into(), "zero2prod".into());
+    init_subscriber(subscriber);
 
     let configuration = get_configuration().expect("Failed to read configuration");
     let connection_pool = PgPool::connect(&configuration.database.connection_string())

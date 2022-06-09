@@ -1,8 +1,8 @@
 use actix_web::{web, HttpResponse};
 use chrono::Utc;
 use sqlx::PgPool;
-use uuid::Uuid;
 use tracing::Instrument;
+use uuid::Uuid;
 
 #[derive(serde::Deserialize)]
 pub struct FormData {
@@ -30,9 +30,7 @@ pub async fn subscribe(
     // Using 'enter' in an async function is a recipe for disaster!
     let _request_span_guard = request_span.enter();
 
-    let query_span = tracing::info_span!(
-        "Saving new subscriber details in the database",
-    );
+    let query_span = tracing::info_span!("Saving new subscriber details in the database",);
 
     match sqlx::query!(
         r#"
