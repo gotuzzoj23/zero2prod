@@ -27,10 +27,9 @@ pub async fn subscribe(
     // Retrieving a connection from the application state!
     connection_pool: web::Data<PgPool>,
 ) -> HttpResponse {
-    match insert_subscriber(&form, &connection_pool).await
-    {
+    match insert_subscriber(&form, &connection_pool).await {
         Ok(_) => HttpResponse::Ok().finish(),
-        Err(_) => HttpResponse::InternalServerError().finish()
+        Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }
 
