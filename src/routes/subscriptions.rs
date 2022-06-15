@@ -16,8 +16,6 @@ pub struct FormData {
     name = "Adding a new subscriber",
     skip(form, connection_pool),
     fields(
-        // Let's generate a random unique identifier
-        request_id = %Uuid::new_v4(),
         subscriber_email = %form.email,
         subscriber_name = %form.name
     )
@@ -46,6 +44,7 @@ pub async fn insert_subscriber(
         INSERT INTO subscriptions (id, email, name, subscribed_at)
         VALUES ($1, $2, $3, $4)
         "#,
+        // Let's generate a random unique identifier
         Uuid::new_v4(),
         form.email,
         form.name,
